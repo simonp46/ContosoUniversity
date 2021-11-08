@@ -1,0 +1,123 @@
+﻿@model ContosoUniversity.Models.SchoolViewModels.InstructorIndexData
+
+@{
+    ViewData["Title"] = "Instructors";
+}
+
+<h1>Instructores</h1>
+
+<p>
+    <a asp-action="Create">Crear nuevo instructor</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de contratación</th>
+            <th>Oficina</th>
+            <th>Cursos</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Instructors)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["InstructorID"])
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstMidName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HireDate)
+                </td>
+                <td>
+                    @if (item.OfficeAssignment != null)
+                    {
+                        @item.OfficeAssignment.Location
+                    }
+                </td>
+                <td>
+                    @foreach (var course in item.CourseAssignments)
+                    {
+                        @course.Course.CourseID @course.Course.Title <br />
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-info" asp-action="Index" asp-route-id="@item.ID">Seleccionar</a> |
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ID">Detalles</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ID">Eliminar</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+@if (Model.Courses != null)
+{
+    <h3>Cursos que puede dictar el instructor</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Numero</th>
+            <th>Curso</th>
+            <th>Departamento</th>
+        </tr>
+
+        @foreach (var item in Model.Courses)
+        {
+            string selectedRow = "";
+            if (item.CourseID == (int?)ViewData["CourseID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Seleccionar", "Index", new { courseID = item.CourseID })
+                </td>
+                <td>
+                    @item.CourseID
+                </td>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Department.Name
+                </td>
+            </tr>
+        }
+
+    </table>
+    @if (Model.Enrollments != null)
+    {
+        <h3>
+            Estudiantes matriculados en el curso seleccionado
+        </h3>
+        <table class="table">
+            <tr>
+                <th>Nombre</th>
+                <th>Grado</th>
+            </tr>
+            @foreach (var item in Model.Enrollments)
+            {
+                <tr>
+                    <td>
+                        @item.Student.FullName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Grade)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+}
