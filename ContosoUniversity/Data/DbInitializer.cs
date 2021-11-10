@@ -12,16 +12,26 @@ namespace ContosoUniversity.Data
     {
         public static void Initialize(SchoolContext context)
         {
-            //context.Database.EnsureCreated();
+            bool containsStudents = context.Students.Any();
+            bool containsInstructors = context.Instructors.Any();
+            bool containsCourses = context.Courses.Any();
+            bool cotainDeepartments = context.Departments.Any();
 
-            // Look for any students.
-            if (context.Students.Any())
+            try
             {
-                return;   // DB has been seeded
-            }
 
-            var students = new Student[]
-            {
+                if (!containsStudents && !containsInstructors && !containsCourses && !cotainDeepartments)
+                {
+                    //context.Database.EnsureCreated();
+
+                    // Look for any students.
+                    if (context.Students.Any())
+                    {
+                        return;   // DB has been seeded
+                    }
+
+                    var students = new Student[]
+                    {
                 new Student { FirstMidName = "Carson",   LastName = "Alexander",
                     EnrollmentDate = DateTime.Parse("2010-09-01") },
                 new Student { FirstMidName = "Meredith", LastName = "Alonso",
@@ -38,16 +48,16 @@ namespace ContosoUniversity.Data
                     EnrollmentDate = DateTime.Parse("2013-09-01") },
                 new Student { FirstMidName = "Nino",     LastName = "Olivetto",
                     EnrollmentDate = DateTime.Parse("2005-09-01") }
-            };
+                    };
 
-            foreach (Student s in students)
-            {
-                context.Students.Add(s);
-            }
-            context.SaveChanges();
+                    foreach (Student s in students)
+                    {
+                        context.Students.Add(s);
+                    }
+                    context.SaveChanges();
 
-            var instructors = new Instructor[]
-            {
+                    var instructors = new Instructor[]
+                    {
                 new Instructor { FirstMidName = "Kim",     LastName = "Abercrombie",
                     HireDate = DateTime.Parse("1995-03-11") },
                 new Instructor { FirstMidName = "Fadi",    LastName = "Fakhouri",
@@ -58,16 +68,16 @@ namespace ContosoUniversity.Data
                     HireDate = DateTime.Parse("2001-01-15") },
                 new Instructor { FirstMidName = "Roger",   LastName = "Zheng",
                     HireDate = DateTime.Parse("2004-02-12") }
-            };
+                    };
 
-            foreach (Instructor i in instructors)
-            {
-                context.Instructors.Add(i);
-            }
-            context.SaveChanges();
+                    foreach (Instructor i in instructors)
+                    {
+                        context.Instructors.Add(i);
+                    }
+                    context.SaveChanges();
 
-            var departments = new Department[]
-            {
+                    var departments = new Department[]
+                    {
                 new Department { Name = "English",     Budget = 350000,
                     StartDate = DateTime.Parse("2007-09-01"),
                     InstructorID  = instructors.Single( i => i.LastName == "Abercrombie").ID },
@@ -80,16 +90,16 @@ namespace ContosoUniversity.Data
                 new Department { Name = "Economics",   Budget = 100000,
                     StartDate = DateTime.Parse("2007-09-01"),
                     InstructorID  = instructors.Single( i => i.LastName == "Kapoor").ID }
-            };
+                    };
 
-            foreach (Department d in departments)
-            {
-                context.Departments.Add(d);
-            }
-            context.SaveChanges();
+                    foreach (Department d in departments)
+                    {
+                        context.Departments.Add(d);
+                    }
+                    context.SaveChanges();
 
-            var courses = new Course[]
-            {
+                    var courses = new Course[]
+                    {
                 new Course {CourseID = 1050, Title = "Chemistry",      Credits = 3,
                     DepartmentID = departments.Single( s => s.Name == "Engineering").DepartmentID
                 },
@@ -111,16 +121,16 @@ namespace ContosoUniversity.Data
                 new Course {CourseID = 2042, Title = "Literature",     Credits = 4,
                     DepartmentID = departments.Single( s => s.Name == "English").DepartmentID
                 },
-            };
+                    };
 
-            foreach (Course c in courses)
-            {
-                context.Courses.Add(c);
-            }
-            context.SaveChanges();
+                    foreach (Course c in courses)
+                    {
+                        context.Courses.Add(c);
+                    }
+                    context.SaveChanges();
 
-            var officeAssignments = new OfficeAssignment[]
-            {
+                    var officeAssignments = new OfficeAssignment[]
+                    {
                 new OfficeAssignment {
                     InstructorID = instructors.Single( i => i.LastName == "Fakhouri").ID,
                     Location = "Smith 17" },
@@ -130,16 +140,16 @@ namespace ContosoUniversity.Data
                 new OfficeAssignment {
                     InstructorID = instructors.Single( i => i.LastName == "Kapoor").ID,
                     Location = "Thompson 304" },
-            };
+                    };
 
-            foreach (OfficeAssignment o in officeAssignments)
-            {
-                context.OfficeAssignments.Add(o);
-            }
-            context.SaveChanges();
+                    foreach (OfficeAssignment o in officeAssignments)
+                    {
+                        context.OfficeAssignments.Add(o);
+                    }
+                    context.SaveChanges();
 
-            var courseInstructors = new CourseAssignment[]
-            {
+                    var courseInstructors = new CourseAssignment[]
+                    {
                 new CourseAssignment {
                     CourseID = courses.Single(c => c.Title == "Chemistry" ).CourseID,
                     InstructorID = instructors.Single(i => i.LastName == "Kapoor").ID
@@ -172,16 +182,16 @@ namespace ContosoUniversity.Data
                     CourseID = courses.Single(c => c.Title == "Literature" ).CourseID,
                     InstructorID = instructors.Single(i => i.LastName == "Abercrombie").ID
                     },
-            };
+                    };
 
-            foreach (CourseAssignment ci in courseInstructors)
-            {
-                context.CourseAssignments.Add(ci);
-            }
-            context.SaveChanges();
+                    foreach (CourseAssignment ci in courseInstructors)
+                    {
+                        context.CourseAssignments.Add(ci);
+                    }
+                    context.SaveChanges();
 
-            var enrollments = new Enrollment[]
-            {
+                    var enrollments = new Enrollment[]
+                    {
                 new Enrollment {
                     StudentID = students.Single(s => s.LastName == "Alexander").ID,
                     CourseID = courses.Single(c => c.Title == "Chemistry" ).CourseID,
@@ -236,20 +246,26 @@ namespace ContosoUniversity.Data
                     CourseID = courses.Single(c => c.Title == "Literature").CourseID,
                     Grade = Grade.B
                     }
-            };
+                    };
 
-            foreach (Enrollment e in enrollments)
-            {
-                var enrollmentInDataBase = context.Enrollments.Where(
-                    s =>
-                            s.Student.ID == e.StudentID &&
-                            s.Course.CourseID == e.CourseID).SingleOrDefault();
-                if (enrollmentInDataBase == null)
-                {
-                    context.Enrollments.Add(e);
+                    foreach (Enrollment e in enrollments)
+                    {
+                        var enrollmentInDataBase = context.Enrollments.Where(
+                            s =>
+                                    s.Student.ID == e.StudentID &&
+                                    s.Course.CourseID == e.CourseID).SingleOrDefault();
+                        if (enrollmentInDataBase == null)
+                        {
+                            context.Enrollments.Add(e);
+                        }
+                    }
+                    context.SaveChanges();
                 }
             }
-            context.SaveChanges();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

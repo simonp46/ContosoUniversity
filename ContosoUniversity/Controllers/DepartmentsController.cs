@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 
+
 namespace ContosoUniversity.Controllers
 {
     public class DepartmentsController : Controller
@@ -131,7 +132,7 @@ namespace ContosoUniversity.Controllers
                     if (databaseEntry == null)
                     {
                         ModelState.AddModelError(string.Empty,
-                            "Cambios inavilitados. El departamento ha sido eliminado por otro usuario.");
+                            "Cambios inhabilitados. El departamento ha sido eliminado por otro usuario.");
                     }
                     else
                     {
