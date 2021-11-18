@@ -10,6 +10,7 @@ namespace ContosoUniversity.Models
    
 
         [DataType(DataType.Date)]
+        // DisplayFormat permite asignar el formato de la fecha "{0:yyyy-MM-dd}"
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Hire Date")]
         public DateTime HireDate { get; set; }

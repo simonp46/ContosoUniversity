@@ -16,6 +16,7 @@ namespace ContosoUniversity.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        // Variable de clase para el contexto de la base de datos
         private readonly SchoolContext _context;
 
         public HomeController(ILogger<HomeController> logger, SchoolContext context)
@@ -25,7 +26,7 @@ namespace ContosoUniversity.Controllers
             _context = context;
 
         }
-
+        //colección de datos EnrollmentDateGroup "LINQ" agrupados por fecha de inscripción.
         public async Task<ActionResult> About()
         {
             IQueryable<EnrollmentDateGroup> data =

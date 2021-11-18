@@ -12,8 +12,10 @@ namespace ContosoUniversity.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Number")]
         public int CourseID { get; set; }
+        //Limite de caracteres para Title
         [StringLength(50, MinimumLength = 3)]
         public string Title { get; set; }
+        //especificación del rango
         [Range(0, 5)]
 
         public int Credits { get; set; }
