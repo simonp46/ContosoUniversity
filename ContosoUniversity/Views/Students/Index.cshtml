@@ -9,6 +9,7 @@
 <p>
     <a asp-action="Create">Crear nuevo estudiante</a>
 </p>
+<!--Cuadro de Busqueda-->
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -21,6 +22,7 @@
 <table class="table">
     <thead>
         <tr>
+            <!--Enlaces de encabezado de columna y orden de filtrado-->
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Nombre</a>
             </th>
@@ -56,6 +58,7 @@
     </tbody>
 </table>
 
+<!--Paginación-->
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";

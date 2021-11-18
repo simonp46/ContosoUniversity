@@ -17,6 +17,7 @@ namespace ContosoUniversity.Models
         public int CourseID { get; set; }
         public int StudentID { get; set; }
         [DisplayFormat(NullDisplayText = "No grade")]
+        //El signo "?" en Grade especifica que permite valores NULL
         public Grade? Grade { get; set; }
 
         public Course Course { get; set; }

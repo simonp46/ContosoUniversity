@@ -11,10 +11,13 @@ namespace ContosoUniversity.Models
         public int ID { get; set; }
 
         [Required]
+        //Limite de caracteres
         [StringLength(50)]
         [Display(Name = "Apellido")]
         public string LastName { get; set; }
+        //campo obligatorio
         [Required]
+        //limite de caracteres
         [StringLength(50, ErrorMessage = "El nombre no puede tener mas de 50 caracteres.")]
         [Column("FirstName")]
         [Display(Name = "Nombre")]

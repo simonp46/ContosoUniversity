@@ -29,7 +29,7 @@ namespace ContosoUniversity.Controllers
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
+            //Paginación
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -38,13 +38,14 @@ namespace ContosoUniversity.Controllers
             {
                 searchString = currentFilter;
             }
-
+            //Funcionalidad de filtrado en el método Index
             ViewData["CurrentFilter"] = searchString;
 
             var students = from s in _context.Students
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
+                //condicional de busqueda con apellido o "||" nombre que contengan la cadena de caracteres enviada "searchString"
                 students = students.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstMidName.Contains(searchString));
             }
@@ -64,6 +65,7 @@ namespace ContosoUniversity.Controllers
                     students = students.OrderBy(s => s.LastName);
                     break;
             }
+            //Convierte la consulta del estudiante en una sola página.
             int pageSize = 3;
             return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
@@ -93,8 +95,6 @@ namespace ContosoUniversity.Controllers
         }
 
         // POST: Students/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,LastName,FirstMidName,EnrollmentDate")] Student student)

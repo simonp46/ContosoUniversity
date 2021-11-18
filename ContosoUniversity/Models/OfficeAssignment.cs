@@ -8,6 +8,7 @@ namespace ContosoUniversity.Models
     {
         [Key]
         public int InstructorID { get; set; }
+        //Limite de caracteres
         [StringLength(50)]
         [Display(Name = "Office Location")]
         public string Location { get; set; }
